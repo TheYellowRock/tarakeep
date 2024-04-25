@@ -1,0 +1,40 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
+}
+
+model Host {
+  id        Int    @id @default(autoincrement())
+  firstName String
+  lastName  String
+  email     String
+  password  String
+}
+
+model Event {
+  id Int @id @default(autoincrement())
+  name String
+  description String
+  startDate DateTime
+  endDate DateTime
+  location String
+  numberOfPlaces Int
+  numberOfTables Int
+
+}
+
+model Guest {
+  id Int @id @default(autoincrement())
+}
+
+model Question {
+  id Int @id @default(autoincrement())
+}
