@@ -24,10 +24,6 @@ export function CreateAHostAccount() {
                             <Input id="lastName" type="text" placeholder="Last Name" required />
                         </div>
                         <div className="grid gap-2">
-                            <Label htmlFor="lastName">LinkedIn Profile</Label>
-                            <Input id="lastName" type="text" placeholder="LinkedIn Profile" required />
-                        </div>
-                        <div className="grid gap-2">
                             <Label htmlFor="lastName">Email</Label>
                             <Input id="email" type="text" placeholder="Email" required />
                         </div>
