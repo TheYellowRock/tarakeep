@@ -6,8 +6,8 @@ generator client {
 }
 
 datasource db {
-  provider = "postgresql"
-  url = env("POSTGRES_PRISMA_URL") // uses connection pooling
+  provider  = "postgresql"
+  url       = env("POSTGRES_PRISMA_URL") // uses connection pooling
   directUrl = env("POSTGRES_URL_NON_POOLING") // uses a direct connection
 }
 
@@ -20,21 +20,31 @@ model Host {
 }
 
 model Event {
-  id Int @id @default(autoincrement())
-  name String
-  description String
-  startDate DateTime
-  endDate DateTime
-  location String
-  numberOfPlaces Int
-  numberOfTables Int
-
+  id             Int        @id @default(autoincrement())
+  name           String
+  description    String
+  startDate      DateTime?
+  endDate        DateTime?
+  location       String?
+  numberOfPlaces Int?
+  numberOfTables Int?
+  questions      Question[]
+  guests         Guest[]
 }
 
 model Guest {
-  id Int @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
+  event    Event  @relation(fields: [eventId], references: [id])
+  eventId  Int
+  name     String
+  surname  String
+  email    String
+  linkedIn String
 }
 
 model Question {
-  id Int @id @default(autoincrement())
+  id       Int    @id @default(autoincrement())
+  event    Event  @relation(fields: [eventId], references: [id])
+  eventId  Int
+  question String
 }

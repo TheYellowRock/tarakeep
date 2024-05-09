@@ -22,7 +22,7 @@ export default async function EventsList() {
                         <Label>No Active Event at the moment</Label> :
                         <div className=" flex flex-col">
                             {events.map((e) => (
-                                <Link href={""}>
+                                <Link key={e.id} href={`/event/summary/${e.id}`}>
                                     <div className="flex flex-col p-3 gap-6">
                                         <Separator />
                                         <div className="flex flex-col gap-2">

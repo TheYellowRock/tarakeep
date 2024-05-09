@@ -1,5 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import EventCreateDialog from "./eventCreateDialog";
 
 export default function EventCreate(){
     return (
@@ -10,7 +11,7 @@ export default function EventCreate(){
                     <CardDescription>Create a new Event</CardDescription>
                 </CardHeader>
                 <CardContent>
-                    <Button>Create</Button>
+                    <EventCreateDialog />
                 </CardContent>
             </Card>
         </div>
