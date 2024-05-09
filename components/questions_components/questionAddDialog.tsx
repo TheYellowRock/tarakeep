@@ -34,7 +34,7 @@ export default function QuestionAddDialog({ params }: { params: { id: string } }
         event.preventDefault()
 
         try {
-            await fetch("https://" + process.env.VERCEL_URL + '/api/create-question', {
+            await fetch('https://tarakeep-theyellowrocks-projects.vercel.app/api/create-question', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
