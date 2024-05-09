@@ -63,7 +63,7 @@ export default function EventEditPage({ params }: { params: { id: string } }) {
     event.preventDefault()
 
     try {
-      await fetch('/api/update-event', {
+      await fetch("https://" + process.env.VERCEL_URL + '/api/update-event', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

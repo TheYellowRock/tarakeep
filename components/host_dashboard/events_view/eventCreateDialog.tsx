@@ -38,7 +38,7 @@ export default function EventCreateDialog() {
         event.preventDefault()
 
         try {
-            await fetch('/api/create-event', {
+            await fetch("https://" + process.env.VERCEL_URL + '/api/create-event', {
                 method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
