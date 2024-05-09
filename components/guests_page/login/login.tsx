@@ -1,10 +1,13 @@
+
 import { Button } from "@/components/ui/button";
 import { Card, CardHeader, CardTitle, CardDescription, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import Link from "next/link";
 
 
-export function Login() {
+export function Login({ params }: { params: { eventId: string } }) {
+
     return (
         <Card className="p-4">
             <CardHeader>
@@ -23,10 +26,11 @@ export function Login() {
                             <Input id="password" type="password" placeholder="Password" required />
                         </div>
                     </div>
-                    <Button type="submit" className="w-full">
-                        Login
-                    </Button>
-                    
+                    <Link href={`/guests/${params.eventId}/thegame`}>
+                        <Button type="submit" className="w-full">
+                            Login
+                        </Button>
+                    </Link>
                 </div>
             </CardContent>
         </Card>

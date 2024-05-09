@@ -1,3 +1,4 @@
+'use client'
 import { Button } from "@/components/ui/button"
 import {
   Card,
@@ -16,14 +17,66 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select"
-import { getEventById } from "@/lib/eventsQueries"
 import { Textarea } from "../ui/textarea"
 import { Separator } from "../ui/separator"
+import { useState } from "react"
+import { useRouter } from "next/navigation"
 
 
-export default async function EventEditPage({ params }: { params: { id: string } }) {
+export default function EventEditPage({ params }: { params: { id: string } }) {
 
-  const event = await getEventById(params.id)
+  const eventId = params.id
+  const [eventName, setEventName] = useState('')
+  const [eventDescription, setEventDescription] = useState('')
+  const [eventAdres, setEventAdres] = useState('')
+  const [numOfTables, setNumOfTables] = useState(0)
+  const [seatsPerTable, setSeatsPerTable] = useState(0)
+
+  const router = useRouter()
+
+  const handleEventNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const eventNameInput = event.target
+    setEventName(eventNameInput.value);
+  }
+
+  const handleEventDescriptionChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
+    const eventDescriptionInput = event.target
+    setEventDescription(eventDescriptionInput.value)
+  }
+
+  const handleEventAdresChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const eventAdresInput = event.target
+    setEventAdres(eventAdresInput.value);
+  }
+
+  const handleNumOfTablesChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const numOfTablesInput = event.target
+    setNumOfTables(parseInt(numOfTablesInput.value));
+  }
+
+  const handleSeatsPerTableChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const seatsPerTableInput = event.target
+    setSeatsPerTable(parseInt(seatsPerTableInput.value));
+  }
+
+  const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
+    event.preventDefault()
+
+    try {
+      await fetch('/api/update-event', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ eventId, eventName, eventDescription, eventAdres, numOfTables, seatsPerTable })
+      })
+      router.refresh()
+    } catch (err) {
+      console.log(err)
+    }
+
+  }
+
 
   return (
     <Card className="w-full my-5 p-5">
@@ -31,25 +84,26 @@ export default async function EventEditPage({ params }: { params: { id: string }
         <CardTitle>Edit the Event Details</CardTitle>
         <CardDescription>Add the details of your event and save it.</CardDescription>
       </CardHeader>
-      <CardContent>
-        <form>
+      <form onSubmit={handleSubmit}>
+        <CardContent>
+
           <div className="grid w-full items-center gap-6">
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="name">Event Name</Label>
-              <Input id="name" placeholder={event?.name} />
+              <Input id="name" defaultValue={eventName} onChange={handleEventNameChange} />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Event Description</Label>
-              <Textarea placeholder="A short description of the event." />
+              <Label htmlFor="description">Event Description</Label>
+              <Textarea placeholder={eventDescription} onChange={handleEventDescriptionChange} />
             </div>
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Event Address</Label>
-              <Input id="name" placeholder='Event address' />
+              <Label htmlFor="address">Event Address</Label>
+              <Input id="address" defaultValue={eventAdres} onChange={handleEventAdresChange} />
             </div>
             <Separator />
             <div className="flex flex-col space-y-1.5">
-              <Label htmlFor="name">Number of Tables</Label>
-              <Input id="name" placeholder='Numbre of the available tables' />
+              <Label htmlFor="numOfTables">Number of Tables</Label>
+              <Input id="numOfTables" defaultValue={numOfTables} onChange={handleNumOfTablesChange} />
             </div>
             <div className="flex flex-col space-y-1.5">
               <Label htmlFor="seats">Number of Seats per Table</Label>
@@ -72,12 +126,13 @@ export default async function EventEditPage({ params }: { params: { id: string }
               </Select>
             </div>
           </div>
-        </form>
-      </CardContent>
-      <CardFooter className="flex justify-end gap-3">
-        <Button variant="outline">Cancel</Button>
-        <Button>Save Changes</Button>
-      </CardFooter>
+
+        </CardContent>
+        <CardFooter className="flex justify-end gap-3">
+          <Button variant="outline">Cancel</Button>
+          <Button type="submit">Save Changes</Button>
+        </CardFooter>
+      </form>
     </Card>
   )
 }

@@ -17,9 +17,9 @@ export default async function QuestionsSummary({ params }: { params: { id: strin
             <CardContent>
                 {questionsList.length === 0 ?
                     <Label>There is no questions related to this event yet.</Label> :
-                    <div className="">
+                    <div className="flex flex-col gap-2">
                         {questionsList.map((q) => (
-                            <Label key={q.id}>- {q.question}</Label>
+                            <Label className="text-md" key={q.id}>- {q.question}</Label>
                         ))}
                     </div>
                 }</CardContent>

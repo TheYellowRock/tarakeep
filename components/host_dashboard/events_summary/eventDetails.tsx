@@ -13,10 +13,10 @@ export default async function EventDetailsCard({ params }: { params: { id: strin
             <CardContent className="flex flex-col">
                 <Label className="text-xl font-semibold py-2">{event?.name}</Label>
                 <Label className="text-md pb-4">{event?.description}</Label>
-                <Label className="py-2">Address:</Label>
+                <Label className="py-2">Address: {event?.location}</Label>
                 <Label className="py-2">Start Date:</Label>
                 <Label className="py-2">End Date:</Label>
-                <Label className="py-2">Numbre of Tables:</Label>
+                <Label className="py-2">Numbre of Tables: {event?.numberOfTables}</Label>
                 <Label className="py-2">Seats per Table:</Label>
             </CardContent>
         </Card>
